@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<ruleset name="deloitte rules"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+  <description>
+	The violations that deloitte hate
+  </description>
+   <rule name="NoModelInController"
+		language="java"
+        message="Don't use model classes in controller"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+    <description>
+		Don't use model classes in controller.
+    </description>
+    <properties>
+    <property name="xpath">
+        <value>
+        <![CDATA[
+           //MarkerAnnotation/Name[@Image='Controller']/preceding::ImportDeclaration/Name[contains(@Image, 'de.hybris.platform.core.model')]
+        ]]>
+        </value>
+    </property>
+    </properties>
+    <example>
+<![CDATA[
+ Dont use model classes in controller
+]]>
+    </example>
+  </rule>
+  
+  <rule name="NoSaveToJaloSession"
+		language="java"
+        message="Don't save in jalo session"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+    <description>
+"Don't save in jalo session."
+    </description>
+    <properties>
+    <property name="xpath">
+        <value>
+<![CDATA[//PrimaryPrefix/Name[@Image=concat(string(//ResultType//ReferenceType/ClassOrInterfaceType[@Image='SessionService']/ancestor::MethodDeclaration/MethodDeclarator/@Image),'.setAttribute')]|//PrimaryPrefix/Name[@Image=concat(string(//ClassOrInterfaceType[@Image='SessionService']/ancestor::FieldDeclaration//VariableDeclaratorId/@Image),'.setAttribute')]|//PrimaryPrefix/Name[@Image=concat(string(//ClassOrInterfaceType[@Image='SessionService']/ancestor::FormalParameter//VariableDeclaratorId/@Image),'.setAttribute')]|//PrimaryPrefix/Name[@Image=concat(string(//ClassOrInterfaceType[@Image='SessionService']/ancestor::LocalVariableDeclaration//VariableDeclaratorId/@Image),'.setAttribute')]
+        ]]>
+        </value>
+    </property>
+    </properties>
+    <example>
+<![CDATA[
+ Dont save in jalo session
+]]>
+    </example>
+  </rule>
+  
+    <rule name="ExceptionInServiceAndDao"
+		language="java"
+        message="Handle exceptions in service and dao layers"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+    <description>
+"Handle exceptions in service and dao layers"
+    </description>
+    <properties>
+    <property name="xpath">
+        <value>
+<![CDATA[
+//PackageDeclaration/Name[contains(@Image,'.service')]/following::MethodDeclaration/child::NameList|//PackageDeclaration/Name[contains(@Image,'.service')]/following::ThrowStatement|//PackageDeclaration/Name[contains(@Image,'.dao')]/following::MethodDeclaration/child::NameList|//PackageDeclaration/Name[contains(@Image,'.dao')]/following::ThrowStatement
+        ]]>
+        </value>
+    </property>
+    </properties>
+    <example>
+<![CDATA[
+Handle exceptions in service and dao layers
+]]>
+    </example>
+  </rule>
+
+ </ruleset>
